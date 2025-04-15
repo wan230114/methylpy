@@ -23,8 +23,7 @@ RUN conda install -y -c bioconda python=3.7.11 \
 RUN /opt/conda/bin/pip install --no-cache-dir methylpy cutadapt
 
 # 修复路径问题（原libgsl链接路径错误）
-RUN mkdir -p /usr/share/man/man1 && \
-    ln -sf /usr/lib/x86_64-linux-gnu/libgsl.so.23 /usr/lib/libgsl.so.0
+RUN ln -sf /usr/lib/x86_64-linux-gnu/libgsl.so.25 /lib/libgsl.so.0
 
 # 安全加固（非root用户运行）
 RUN useradd -r -m -U -d /app -s /bin/false appuser
