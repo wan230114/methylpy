@@ -18,6 +18,7 @@ RUN sed -i 's/main/main contrib non-free/' /etc/apt/sources.list && \
 RUN conda install -y -c bioconda python=3.7.11 \
     bowtie bowtie2 samtools && \
     conda clean --all -y
+RUN conda install -y -c bioconda picard &&  conda clean --all -y
 
 # 合并Python包安装（利用缓存机制）
 RUN /opt/conda/bin/pip install --no-cache-dir methylpy cutadapt
@@ -25,7 +26,4 @@ RUN /opt/conda/bin/pip install --no-cache-dir methylpy cutadapt
 # 修复路径问题（原libgsl链接路径错误）
 RUN ln -sf /usr/lib/x86_64-linux-gnu/libgsl.so.25 /lib/libgsl.so.0
 
-# 安全加固（非root用户运行）
-RUN useradd -r -m -U -d /app -s /bin/false appuser
 WORKDIR /app
-USER appuser
